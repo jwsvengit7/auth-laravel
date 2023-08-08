@@ -25,8 +25,7 @@ class BvnValidController extends Controller
         $data = [
             'token' => $token,
             'id' => $bvn,
-            'isSubjectConsent' => true,
-            'premiumBVN' => true, 
+            'isSubjectConsent' => true
         ];
 
         try {

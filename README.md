@@ -1,66 +1,65 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BVN API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [About](#about)
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Login](#login)
+  - [Signup](#signup)
+  - [BVN API Integration](#bvn-api-integration)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Code of Conduct](#code-of-conduct)
+- [Security](#security)
+- [License](#license)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## About
 
-## Learning Laravel
+Project Description: Login, Signup, and BVN Authorization System
+Overview
+This project is a web application that provides user authentication through login and signup functionalities. Additionally, it incorporates BVN (Bank Verification Number) authorization to enhance security and identity verification for users.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Key Features
+User Registration and Login: Users can create accounts by registering with their email and password. They can subsequently log in using their registered credentials.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+BVN Integration for Identity Verification: The application integrates with a BVN API to verify the authenticity of user information and identity. During signup, users are prompted to provide their BVN, which is then verified through the external BVN API.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Enhanced Security: By leveraging BVN verification, the application enhances security by ensuring that users provide accurate and verified information during the registration process.
 
-## Laravel Sponsors
+User Profile Management: Registered users can manage their profiles, update their personal information, and view their account-related details.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Session Management: The application employs session management to keep users logged in across different pages of the application until they choose to log out.
 
-### Premium Partners
+Forgot Password: Users who forget their passwords can initiate a password reset process by providing their email address. They receive instructions to reset their password via email.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+User Roles and Permissions: Implement role-based access control to define different levels of access for different user roles (e.g., regular users, administrators).
 
-## Contributing
+How It Works
+Signup: Users enter their email, password, and BVN during the signup process. The BVN is sent to the external BVN API for verification. Once verified, users are allowed to complete the registration.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Login: Registered users enter their email and password to log in. Upon successful authentication, they gain access to their user dashboard.
 
-## Code of Conduct
+BVN Authorization: BVN verification ensures that users provide accurate information during registration. This helps prevent fake accounts and enhances overall security.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+User Dashboard: Upon logging in, users are presented with a personalized dashboard where they can manage their profile and access account-related information.
 
-## Security Vulnerabilities
+Technologies Used
+Frontend: HTML, CSS, JavaScript
+Backend: PHP (or any preferred server-side language)
+Database: MySQL
+External API: BVN Verification API (provided by a third-party service)
+Web Framework: Laravel (for PHP) 
+Potential Benefits
+Enhanced Security: BVN verification adds an extra layer of security and prevents fraudulent account creation.
+Streamlined User Experience: Simplified signup and login processes provide a user-friendly experience.
+Identity Verification: The BVN authorization ensures that users are who they claim to be, increasing trust and authenticity.
+Future Scope
+The project can be expanded to include features such as two-factor authentication (2FA), email confirmation during registration, account recovery options, and more advanced user profile management.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project aims to provide a secure and efficient way for users to create accounts, log in, and verify their identity using BVN verification, contributing to a more reliable and trustworthy user experience.
