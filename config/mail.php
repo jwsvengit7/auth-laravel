@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'sendinblue'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -49,6 +50,10 @@ return [
         'ses' => [
             'transport' => 'ses',
         ],
+        'sendinblue' => [
+            'transport' => 'sendinblue',
+        ],
+        
 
         'mailgun' => [
             'transport' => 'mailgun',
@@ -99,9 +104,10 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'chiorlujack@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
+    
 
     /*
     |--------------------------------------------------------------------------
