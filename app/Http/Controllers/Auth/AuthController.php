@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 use App\Utils\Email;
+use App\Http\Controllers\Auth\OtpController\createOtp;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,19 +11,13 @@ use App\Models\User;
 use App\Models\Otp;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
     public function __construct(){
         $this->middleware('auth:api', ['except' => ['login', 'register',"otp"]]);
 
     }
 
-    public function otp(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'otp' => 'required|string',
-        ]);
-
-    }
 
 public function login(Request $request) {
     $validator = Validator::make($request->all(), [
@@ -40,14 +35,7 @@ public function login(Request $request) {
     return $this->createNewToken($token);
 }
 
-    protected function createNewToken($token) {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => 60 * 60, // 60
-            'user' => auth()->user()
-        ]);
-    }
+
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
@@ -70,12 +58,14 @@ public function login(Request $request) {
             'phone_number' =>$request->phone_number,
             'interest' => $request->interest
         ]);
-
         $otp = Email::generateOTP();
         $id = $user->id;
         echo $id;
         $send = Email::sendEmailWithOTP($request->email,$otp);
-        saveOtp($otp,$id);
+        $createotp = new OtpController();
+        OtpController::createOtp($otp, $id);
+
+      
         return response()->json([
             'message' => 'User successfully registered',
             'otp'=>$otp,
@@ -85,14 +75,6 @@ public function login(Request $request) {
     }
 
 
-
-    protected function saveOtp($otp,$id){
-        $saveOTP = Otp::create([
-            'otp' => $otp,
-            'userid' => $id
-        ]);
-    }
-
     public function logout() {
         auth()->logout();
         return response()->json(['message' => 'User successfully logged out']);
@@ -101,6 +83,19 @@ public function login(Request $request) {
     public function userProfile() {
         return response()->json(auth()->user());
     }
+
+
+
+
+    protected function createNewToken($token) {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => 60 * 60, // 60
+            'user' => auth()->user()
+        ]);
+    }
+
 
 
 }
