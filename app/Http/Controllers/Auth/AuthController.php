@@ -19,22 +19,33 @@ class AuthController extends Controller
     }
 
 
-public function login(Request $request) {
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|email',
-        'password' => 'required|string|min:6',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 422);
+    public function login(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+    
+        $user = User::where('email', $request->email)->first();
+    
+        if ($user == null) {
+            return response()->json(['error' => 'NOT FOUND'], 401);
+        }
+    
+        if (!$user->status) {
+            return response()->json(['error' => 'NOT ACTIVATED'], 401);
+        }
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    
+        if (!$token = JWTAuth::attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    
+        return $this->createNewToken($token);
     }
-    if (! $token = JWTAuth::attempt($validator->validated())) {
-        return response()->json(['error' => 'Unauthorized'], 401);
-    }
-
-    return $this->createNewToken($token);
-}
-
+    
 
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
@@ -60,7 +71,6 @@ public function login(Request $request) {
         ]);
         $otp = Email::generateOTP();
         $id = $user->id;
-        echo $id;
         $send = Email::sendEmailWithOTP($request->email,$otp);
         $createotp = new OtpController();
         OtpController::createOtp($otp, $id);
