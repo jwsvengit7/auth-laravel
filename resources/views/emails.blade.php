@@ -58,8 +58,8 @@
         <div class="header">
             <h1>One-Time Password (OTP) Verification</h1>
         </div>
-        <p>Hello [User's Name],</p>
-        <p>Your OTP code is: <span class="otp-code">{{otp}}</span></p>
+        <p>Hello {{ $email }},</p>
+        <p>Your OTP code is: <span class="otp-code">{{$otp}}</span></p>
         <p class="instructions">Please use the provided OTP code to complete your verification process.</p>
         <p>If you did not request this OTP, please ignore this email.</p>
         <p class="instructions">

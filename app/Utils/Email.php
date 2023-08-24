@@ -27,11 +27,11 @@ class Email extends Controller
         $otp = self::generateOTP(); 
         Cache::put('otp_' . $email, $otp, now()->addMinutes(10));
         try {
-            Mail::to($email)->send(new \App\Mail\OtpSend($otp)); 
+            Mail::to($email)->send(new \App\Mail\OtpSend($otp,$email)); 
             return response()->json(['message' => 'OTP sent successfully']);
         } catch (\Exception $e) {
             Log::error('Error sending OTP email: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to send OTP email'], 500);
+            return response()->json(['error' => 'Failed to send OTP email'.$e->getMessage()], 500);
         }
     }
     

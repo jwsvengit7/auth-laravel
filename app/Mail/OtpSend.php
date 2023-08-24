@@ -12,16 +12,18 @@ class OtpSend extends Mailable
     use Queueable, SerializesModels;
 
     public $otp;
+    public $email;
 
-    public function __construct($otp)
+    public function __construct($otp,$email)
     {
         $this->otp = $otp;
+        $this->email = $email;
     }
 
     public function build()
     {
         return $this->subject('Your OTP Code')
                     ->view('emails') // Create a corresponding blade view
-                    ->with(['otp' => $this->otp]);
+                    ->with(['otp' => $this->otp,"email"=>$this->email]);
     }
 }

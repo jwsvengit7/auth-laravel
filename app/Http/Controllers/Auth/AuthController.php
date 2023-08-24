@@ -14,10 +14,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth:api', ['except' => ['login', 'register',"otp"]]);
-
+        $this->middleware('auth:api', ['except' => ['login', 'register',"otp","reset","resend_otp"]]);
     }
-
 
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
@@ -69,18 +67,39 @@ class AuthController extends Controller
             'phone_number' =>$request->phone_number,
             'interest' => $request->interest
         ]);
+        return $this->sendotpresponse($user->email,$user->id);
+    }
+
+    public function resend_otp(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|string|max:100',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 200);
+        }
+    
+        $user = User::find($request->id);
+    
+        if (!$user) {
+            return response()->json("User not found", 404);
+        }
+    
+        return $this->sendotpresponse($user->email,$user->id);
+    }
+
+
+    protected function sendotpresponse($email,$id){
         $otp = Email::generateOTP();
-        $id = $user->id;
-        $send = Email::sendEmailWithOTP($request->email,$otp);
+        $send = Email::sendEmailWithOTP($email,$otp);
         $createotp = new OtpController();
         OtpController::createOtp($otp, $id);
-
       
         return response()->json([
             'message' => 'User successfully registered',
             'otp'=>$otp,
             'email' => $send,
-            'user' => $user
+            'user_id' => $id
         ], 201);
     }
 
@@ -101,8 +120,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => 60 * 60, // 60
-            'user' => auth()->user()
+            'expires_in' => 60 * 60
         ]);
     }
 

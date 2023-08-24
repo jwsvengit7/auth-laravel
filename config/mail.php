@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'sendinblue'),
+    'default' => env('MAIL_MAILER', 'smtp'),
 
 
     /*
@@ -38,7 +38,7 @@ return [
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'smtp.swissfliptrade.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
@@ -50,17 +50,15 @@ return [
         'ses' => [
             'transport' => 'ses',
         ],
-        'sendinblue' => [
-            'transport' => 'sendinblue',
-        ],
+      
         
 
         'mailgun' => [
             'transport' => 'mailgun',
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
+            'domain' => env('MAILGUN_DOMAIN'),
+            'secret' => env('MAILGUN_SECRET'),
         ],
+        
 
         'postmark' => [
             'transport' => 'postmark',
@@ -104,7 +102,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'chiorlujack@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@swissfliptrade.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
     

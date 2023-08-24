@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 
 class  User extends Authenticatable implements JWTSubject
@@ -27,6 +29,8 @@ class  User extends Authenticatable implements JWTSubject
         'phone_number',
         'interest',
         'status',
+        'password_reset_token',
+        'password_reset_token_created_at',
 
     ];
 
@@ -65,5 +69,11 @@ class  User extends Authenticatable implements JWTSubject
         if ( $password !== null & $password !== "" ) {
             $this->attributes['password'] = bcrypt($password);
         }
+    }
+    public function createPasswordResetToken()
+    {
+        $this->password_reset_token = Str::random(60);
+        $this->password_reset_token_created_at = now();
+        $this->save();
     }
 }
